@@ -3,22 +3,24 @@ import React from 'react';
 const DashboardHeader = () => {
   return (
     <div className="bg-[#121212] text-white p-8 rounded-xl space-y-6">
-      {/* Logo and Title */}
-      {/* <div className="flex items-start justify-between">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" // placeholder logo
-          alt="Logo"
-          className="w-8 h-8"
-        />
-       
-      </div> */}
+      <div className='flex flex-wrap flex-row gap-5 p-10 justify-between'>
+        {/* Logo and Title */}
+        <div className="flex items-start justify-between">
+          <img
+            src="/sedulous_logo.png" // placeholder logo
+            alt="Logo"
+            className=" h-[100px] object-cover"
+          />
 
-      {/* Heading */}
-      <div>
-        <h1 className="text-6xl font-bold">Licence Manager Optimization</h1>
-        <p className=" text-2xl mt-5">
-          Azure Cost Optimization Dashboard 
-        </p>
+        </div>
+
+        {/* Heading */}
+        <div>
+          <h1 className="text-6xl font-bold">Licence Manager Optimization</h1>
+          <p className=" text-2xl mt-5">
+            Azure Cost Optimization Dashboard
+          </p>
+        </div>
       </div>
 
       <hr className="border-gray-700" />

@@ -8,8 +8,8 @@ function Savings() {
     const {data} = useContext(dataContext)
   
     return (
-        <div className="bg-[#111827] text-white min-h-screen p-6 font-sans">
-            <h1 className="text-2xl font-semibold mb-4">Savings Opportunities</h1>
+        <div className=" text-white p-6 font-sans">
+            <h1 className="text-4xl font-semibold mb-4">Savings Opportunities</h1>
             <div className="overflow-auto rounded-lg border border-gray-700">
                 <table className="min-w-full text-left text-sm text-white">
                     <thead className="bg-[#1f2937] text-gray-300">
