@@ -2,9 +2,9 @@ import React from 'react'
 
 function Sidebar() {
   return (
-    <div className="w-[500px] min-h-screen bg-[#1C1B2A] text-white p-6 flex items-center justify-center">
+    <div className="w-[30%] md:w-[300px] min-h-screen bg-[#1C1B2A] text-white p-6 flex items-center justify-center">
       <div>
-        <h2 className="text-4xl font-bold mb-10">Azure Cost Dashboard</h2>
+        <h2 className="text-4xl font-bold mb-10">Sedulous Dashboard</h2>
         <p className="text-xl font-semibold mb-2 ">Dashboard Features</p>
         <div className="flex flex-col gap-4 text-xl font-semibold">
           <button

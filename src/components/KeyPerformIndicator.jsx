@@ -67,7 +67,7 @@ const KeyPerformIndicator = () => {
     return (
         <div className=" text-white p-8 rounded-xl">
             <h2 className="text-3xl font-bold mb-6">Key Performance Indicators</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-4">
                 {kpis.map((kpi, idx) => (
                     <div key={idx} className="bg-white  p-6 rounded-lg">
                         <div className="text-[16px] text-gray-700 font-semibold mb-2">{kpi.title}</div>
