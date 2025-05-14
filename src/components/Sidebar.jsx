@@ -8,7 +8,7 @@ function Sidebar() {
         <p className="text-xl font-semibold mb-2 ">Dashboard Features</p>
         <div className="flex flex-col gap-4 text-xl font-semibold">
           <button
-            className="w-full flex items-center justify-center gap-2 py-3 border rounded-[10px] border-gray-600 hover:bg-gray-700 cursor-pointer">
+            className="w-full flex items-center justify-center gap-2 py-3 border rounded-[10px] border-gray-600 bg-gray-700 cursor-pointer">
             📊 <span>Main Dashboard</span>
           </button>
 
