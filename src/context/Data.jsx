@@ -1,70 +1,71 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 
-export const dataContext = createContext()
+export const dataContext = createContext();
 
 export const DataProvider = ({ children }) => {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        async function fetchData() {
-            setLoading(true);
-            try {
-                const response = await axios.post('http://192.168.1.19:8989/api/azure-cost-custom/b8e73211-ba0b-4545-b969-b079e74c7265', {
-                    "type": "ActualCost",
-                    "timeframe": "MonthToDate",
-                    "dataset": {
-                        "granularity": "Daily",
-                        "aggregation": {
-                            "totalCost": {
-                                "name": "PreTaxCost",
-                                "function": "Sum"
-                            }
-                        }
-                    }
-                }); // Replace with your API endpoint
-                console.log('Data fetched successfully:', response.data);
-                if (response) {
-                    setLoading(false);
-                    const agegregatedData = aggregatePreTaxCostByService(response?.data);
-                    setData(agegregatedData);
-                }
-            } catch (error) {
-                console.log('Error fetching data:', error);
-            }
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      try {
+        const response = await axios.post(
+          "http://localhost:8989/api/azure-cost-custom/b8e73211-ba0b-4545-b969-b079e74c7265",
+          {
+            type: "ActualCost",
+            timeframe: "MonthToDate",
+            dataset: {
+              granularity: "Daily",
+              aggregation: {
+                totalCost: {
+                  name: "PreTaxCost",
+                  function: "Sum",
+                },
+              },
+            },
+          }
+        ); // Replace with your API endpoint
+        console.log("Data fetched successfully:", response.data);
+        if (response) {
+          setLoading(false);
+          const agegregatedData = aggregatePreTaxCostByService(response?.data);
+          setData(agegregatedData);
         }
-        fetchData()
-
-    }, [])
-
-
-    function aggregatePreTaxCostByService(data) {
-        const serviceCosts = {};
-
-        data.forEach(entry => {
-            const service = entry.ServiceName;
-            const cost = parseFloat(entry.PreTaxCost);
-
-            if (!serviceCosts[service]) {
-                serviceCosts[service] = 0;
-            }
-
-            serviceCosts[service] += cost;
-        });
-
-        // Convert the result to an array of objects
-        const result = Object.entries(serviceCosts).map(([service, totalCost]) => ({
-            ServiceName: service,
-            TotalPreTaxCost: +totalCost.toFixed(6)  // rounded to 6 decimal places
-        }));
-        console.log(result);
-        return result;
+      } catch (error) {
+        console.log("Error fetching data:", error);
+      }
     }
+    fetchData();
+  }, []);
 
-    return (
-        <dataContext.Provider value={{data,loading}}>
-            {children}
-        </dataContext.Provider>
-    )
-}
+  function aggregatePreTaxCostByService(data) {
+    const serviceCosts = {};
+
+    data.forEach((entry) => {
+      const service = entry.ServiceName;
+      const cost = parseFloat(entry.PreTaxCost);
+
+      if (!serviceCosts[service]) {
+        serviceCosts[service] = 0;
+      }
+
+      serviceCosts[service] += cost;
+    });
+
+    // Convert the result to an array of objects
+    const result = Object.entries(serviceCosts).map(([service, totalCost]) => ({
+      ServiceName: service,
+      TotalPreTaxCost: +totalCost.toFixed(6), // rounded to 6 decimal places
+    }));
+    console.log(result);
+    return result;
+  }
+
+  return (
+    <dataContext.Provider value={{ data, loading }}>
+      {children}
+    </dataContext.Provider>
+  );
+};
