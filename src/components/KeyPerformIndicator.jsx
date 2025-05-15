@@ -4,11 +4,12 @@ import { dataContext } from '../context/Data';
 const KeyPerformIndicator = () => {
     const [totalCostSpent, setTotalCostSpent] = useState(0);
     const [color, setColor] = useState('text-green-500');
+    const [totalCost, setTotalCost] = useState(0);
     const { data } = useContext(dataContext)
     const kpis = [
         {
             title: 'Month to Date Spend',
-            value: '₹86,704',
+            value: `₹ ${(totalCost).toFixed(2)}`,
             subtext: '₹-74,866 vs prev',
             valueColor: 'text-green-500',
             subtextColor: 'text-green-400',
@@ -49,6 +50,7 @@ const KeyPerformIndicator = () => {
         data.forEach(item => {
             total += item.TotalPreTaxCost;
         });
+        setTotalCost(total)
         let totalcost = ((total / 1000) * 100).toFixed(2)
         setTotalCostSpent(totalcost);
         if(totalcost<80){

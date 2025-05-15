@@ -38,7 +38,7 @@ const DashboardHeader = () => {
           <label className="block text-sm text-gray-400 mb-1">Time Range</label>
           <select className="w-full bg-[#1E1E1E] text-white p-3 rounded-md border border-gray-600">
             <option>Monthly</option>
-            <option>Daily</option>
+            <option>Quaterly</option>
           </select>
         </div>
         <div>
