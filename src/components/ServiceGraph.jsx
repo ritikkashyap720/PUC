@@ -50,6 +50,7 @@ function ServiceGraph() {
                                     offset: -40,
                                     fill: '#ccc',
                                     fontSize: 18,
+                                    fontWeight: 'bold',
                                 }}
                             />
                             <YAxis stroke="#ccc" />
