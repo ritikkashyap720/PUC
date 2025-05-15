@@ -15,7 +15,7 @@ import { dataContext } from '../context/Data';
 
 
 function ServiceGraph() {
-    const { data } = useContext(dataContext)
+    const { data, currencySymbol,currentCurrency,currencyValue } = useContext(dataContext)
 
     const COLORS = {
         'Azure Database for MySQL': '#EC4899', // pink
@@ -45,7 +45,7 @@ function ServiceGraph() {
                                 interval={0}
                                 height={100}
                                 label={{
-                                    value: 'Azure Services',
+                                    value: `Azure Services VS Pre-Tax Cost(in ${currentCurrency})`,
                                     position: 'insideBottom',
                                     offset: -40,
                                     fill: '#ccc',

@@ -39,6 +39,8 @@ const DashboardHeader = () => {
           >
             <option value="INR">INR</option>
             <option value="SEK">SEK</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
           </select>
         </div>
         <div>

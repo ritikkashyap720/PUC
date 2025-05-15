@@ -10,14 +10,14 @@ const KeyPerformIndicator = () => {
         {
             title: 'Month to Date Spend',
             value: `${currencySymbol} ${(totalCost).toFixed(2)}`,
-            subtext: '₹-74,866 vs prev',
+            subtext: `${currencySymbol} -74,866 vs prev`,
             valueColor: 'text-green-500',
             subtextColor: 'text-green-400',
         },
         {
             title: 'Budget Utilization',
             value: `${totalCostSpent}%`,
-            subtext: `of ${currentCurrency} ${currencyValue*1000}`,
+            subtext: `of ${currentCurrency} ${(currencyValue*1000).toFixed(2)}`,
             valueColor: `${color}`,
             subtextColor: 'text-gray-500',
         },
@@ -64,7 +64,7 @@ const KeyPerformIndicator = () => {
 
     useEffect(() => {
         calculateTotalCost(data);
-    }, [])
+    }, [data])
 
     return (
         <div className=" text-white p-8 rounded-xl">

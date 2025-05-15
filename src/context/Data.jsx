@@ -9,6 +9,7 @@ export const DataProvider = ({ children }) => {
     const [currentCurrency, setCurrentCurrency] = useState("INR");
     const [currencyValue, setCurrencyValue] = useState(1);
     const [currencySymbol, setCurrencySymbol] = useState('₹');
+    const [globalData, setGlobalData] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
@@ -32,6 +33,7 @@ export const DataProvider = ({ children }) => {
                 if (response) {
                     setLoading(false);
                     const agegregatedData = aggregatePreTaxCostByService(response?.data);
+                    setGlobalData(agegregatedData);
                     setData(agegregatedData);
                 }
             } catch (error) {
@@ -51,17 +53,18 @@ export const DataProvider = ({ children }) => {
                     console.log(typeof (currencyValue))
                     let newData = []
                     console.log(currencyResponse.data.rates[currentCurrency])
-                    data.forEach((item) => {
-                        let newItem = { ServiceName: item?.ServiceName, TotalPreTaxCost: (item?.TotalPreTaxCost) * currencyValue }
+                    globalData.map((item) => {
+                        let newItem = { ServiceName: item?.ServiceName, TotalPreTaxCost: (item?.TotalPreTaxCost) * currencyResponse.data.rates[currentCurrency] }
                         newData.push(newItem);
                     });
-                    // console.(newData);
+                    console.log(newData);
                     setData(newData);
                     setCurrencySymbol('kr');
                 }
             } else {
                 setCurrencySymbol('₹');
                 setCurrencyValue(1)
+                setData(globalData);
             }
         }
         fetchCurrencyValue()
