@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { dataContext } from '../context/Data';
 
 function ServiceCost() {
-   const {data} = useContext(dataContext)
+   const { data, currencySymbol,currentCurrency,currencyValue } = useContext(dataContext)
   
 
 
@@ -26,8 +26,8 @@ function ServiceCost() {
                 {service.ServiceName}
               </td>
               <td className="px-4 py-2 border border-gray-600 border-opacity-20">
-                INR
-                {" " + service.TotalPreTaxCost}
+                
+                {currentCurrency+" "+ service.TotalPreTaxCost}
               </td>
             </tr>
           ))}

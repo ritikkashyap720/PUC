@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { dataContext } from '../context/Data';
 
 const DashboardHeader = () => {
+  const { setCurrentCurrency, currentCurrency } = useContext(dataContext)
+  
   return (
     <div className="bg-[#121212] text-white p-8 rounded-xl space-y-6">
       <div className='flex flex-wrap flex-row gap-5 p-10 justify-between'>
@@ -29,9 +32,13 @@ const DashboardHeader = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
           <label className="block text-sm text-gray-400 mb-1">Currency</label>
-          <select className="w-full bg-[#1E1E1E] text-white p-3 rounded-md border border-gray-600 ">
-            <option className='p-3 rounded-md'>INR</option>
-            <option>EUR</option>
+          <select
+            value={currentCurrency}
+            onChange={(e)=>setCurrentCurrency(e.target.value)}
+            className="w-full bg-[#1E1E1E] text-white p-3 rounded-md border border-gray-600"
+          >
+            <option value="INR">INR</option>
+            <option value="SEK">SEK</option>
           </select>
         </div>
         <div>
