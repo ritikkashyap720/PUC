@@ -27,7 +27,7 @@ function ServiceCost() {
               </td>
               <td className="px-4 py-2 border border-gray-600 border-opacity-20">
                 
-                {currentCurrency+" "+ service.TotalPreTaxCost}
+                {currencySymbol!=="SEK"?currencySymbol:""}{service.TotalPreTaxCost.toFixed(2)} {currencySymbol==="SEK"?currencySymbol:""}
               </td>
             </tr>
           ))}

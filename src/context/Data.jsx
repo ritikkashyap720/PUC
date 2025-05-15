@@ -10,9 +10,10 @@ export const DataProvider = ({ children }) => {
     const [currencyValue, setCurrencyValue] = useState(1);
     const [currencySymbol, setCurrencySymbol] = useState('₹');
     const [globalData, setGlobalData] = useState([]);
+    const [budgetAmount, setBudgetAmount] = useState(1000);
     const currencyObject = {
         INR: "₹",
-        SEK: "kr",
+        SEK: "SEK",
         USD: "$",
         EUR: "€"
       };
@@ -49,6 +50,7 @@ export const DataProvider = ({ children }) => {
         fetchData()
 
     }, [])
+
 
     useEffect(() => {
         async function fetchCurrencyValue() {
@@ -102,7 +104,7 @@ export const DataProvider = ({ children }) => {
     }
 
     return (
-        <dataContext.Provider value={{ data, loading, setCurrentCurrency, currentCurrency, currencySymbol, setCurrencySymbol, currencyValue }}>
+        <dataContext.Provider value={{ data, loading, setCurrentCurrency, currentCurrency, currencySymbol, setCurrencySymbol, currencyValue ,setBudgetAmount,budgetAmount}}>
             {children}
         </dataContext.Provider>
     )

@@ -45,7 +45,7 @@ function ServiceGraph() {
                                 interval={0}
                                 height={100}
                                 label={{
-                                    value: `Azure Services VS Pre-Tax Cost(in ${currentCurrency})`,
+                                    value: `Azure Services Vs Cost(in ${currentCurrency})`,
                                     position: 'insideBottom',
                                     offset: -40,
                                     fill: '#ccc',

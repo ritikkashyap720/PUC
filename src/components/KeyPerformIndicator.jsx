@@ -7,26 +7,26 @@ const KeyPerformIndicator = () => {
     const [totalCost, setTotalCost] = useState(0);
     const [foreCast, setForeCast] = useState(0);
 
-    const { data, currencySymbol, currentCurrency, currencyValue } =
+    const { data, currencySymbol, currentCurrency, currencyValue,budgetAmount } =
         useContext(dataContext);
     const kpis = [
         {
             title: "Month to Date Spend",
-            value: `${currencySymbol} ${totalCost.toFixed(2)}`,
-            subtext: `${currencySymbol} -74,866 vs prev`,
+            value: `${currencySymbol!=="SEK"?currencySymbol:""}${totalCost.toFixed(2)} ${currencySymbol==="SEK"?currencySymbol:""}`,
+            subtext: `${currencySymbol!=="SEK"?currencySymbol:""} -74,866 ${currencySymbol==="SEK"?currencySymbol:""} vs prev`,
             valueColor: "text-green-500",
             subtextColor: "text-green-400",
         },
         {
             title: "Budget Utilization",
             value: `${totalCostSpent}%`,
-            subtext: `of ${currentCurrency} ${(currencyValue * 1000).toFixed(2)}`,
+            subtext: `of ${currencySymbol!=="SEK"?currencySymbol:""}${(currencyValue * budgetAmount).toFixed(2)} ${currencySymbol==="SEK"?currencySymbol:""}`,
             valueColor: `${color}`,
             subtextColor: "text-gray-500",
         },
         {
             title: "Savings Opportunities",
-            value: `${currencySymbol} 707`,
+            value: `${currencySymbol!=="SEK"?currencySymbol:""}707 ${currencySymbol==="SEK"?currencySymbol:""}`,
             subtext: "4 opportunities",
             valueColor: "text-green-500",
             subtextColor: "text-green-400",
@@ -40,7 +40,7 @@ const KeyPerformIndicator = () => {
         },
         {
             title: "Forecasted Month-End",
-            value: `${currencySymbol} ${foreCast.toFixed(2)}`,
+            value: `${currencySymbol!=="SEK"?currencySymbol:""}${foreCast.toFixed(2)} ${currencySymbol==="SEK"?currencySymbol:""}`,
             subtext: "448% of budget",
             valueColor: "text-red-600",
             subtextColor: "text-red-400",
@@ -53,7 +53,7 @@ const KeyPerformIndicator = () => {
             total += item.TotalPreTaxCost;
         });
         setTotalCost(total);
-        let totalcost = ((total / (1000 * currencyValue)) * 100).toFixed(2);
+        let totalcost = ((total / (budgetAmount * currencyValue)) * 100).toFixed(2);
         setTotalCostSpent(totalcost);
         if (totalcost < 80) {
             setColor("text-green-500");
