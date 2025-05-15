@@ -10,9 +10,10 @@ export const DataProvider = ({ children }) => {
   const [currencyValue, setCurrencyValue] = useState(1);
   const [currencySymbol, setCurrencySymbol] = useState("₹");
   const [globalData, setGlobalData] = useState([]);
+  const [budgetAmount, setBudgetAmount] = useState(1000);
   const currencyObject = {
     INR: "₹",
-    SEK: "kr",
+    SEK: "SEK",
     USD: "$",
     EUR: "€",
   };
@@ -119,6 +120,8 @@ export const DataProvider = ({ children }) => {
         currencySymbol,
         setCurrencySymbol,
         currencyValue,
+        setBudgetAmount,
+        budgetAmount,
       }}
     >
       {children}

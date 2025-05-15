@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { dataContext } from "../context/Data";
 
 export default function UpdateBudgetForm() {
-    const [amount, setAmount] = useState("");
+    const { budgetAmount,setBudgetAmount } =
+           useContext(dataContext);
+    const [amount, setAmount] = useState(0);
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [threshold, setThreshold] = useState("");
@@ -41,6 +44,7 @@ export default function UpdateBudgetForm() {
         };
         setLoading(true);
         try {
+            
             const res = await fetch(
                 "http://192.168.1.19:8989/api/azure-budget/b8e73211-ba0b-4545-b969-b079e74c7265/serviceCost",
                 {
@@ -51,7 +55,7 @@ export default function UpdateBudgetForm() {
                     body: JSON.stringify(requestBody),
                 }
             );
-
+            setBudgetAmount(parseFloat(amount));
             if (!res.ok) throw new Error("Failed to update budget");
             alert("Budget updated successfully!");
             setEmails([""]);
@@ -88,7 +92,7 @@ export default function UpdateBudgetForm() {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
                             <label className="block text-lg text-gray-300 mb-1">
-                                Enter Amount (INR)
+                                Enter Budget Amount 
                             </label>
                             <input
                                 type="number"
@@ -123,7 +127,7 @@ export default function UpdateBudgetForm() {
 
                         <div>
                             <label className="block text-lg text-gray-300 mb-1">
-                                Threshold (%)
+                                Set Threshold (%) for Alerts
                             </label>
                             <input
                                 type="number"
@@ -163,7 +167,7 @@ export default function UpdateBudgetForm() {
                             onClick={handleSubmit}
                             className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition"
                         >
-                            Update Budget
+                            Save
                         </button>
                     </div>
                 </div>
