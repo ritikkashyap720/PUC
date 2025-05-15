@@ -5,6 +5,8 @@ const KeyPerformIndicator = () => {
   const [totalCostSpent, setTotalCostSpent] = useState(0);
   const [color, setColor] = useState("text-green-500");
   const [totalCost, setTotalCost] = useState(0);
+  const [foreCast, setForeCast] = useState(0);
+
   const { data, currencySymbol, currentCurrency, currencyValue } =
     useContext(dataContext);
   const kpis = [
@@ -38,7 +40,7 @@ const KeyPerformIndicator = () => {
     },
     {
       title: "Forecasted Month-End",
-      value: `${currencySymbol} 223,985`,
+      value: `${currencySymbol} ${foreCast.toFixed(2)}`,
       subtext: "448% of budget",
       valueColor: "text-red-600",
       subtextColor: "text-red-400",
@@ -60,7 +62,30 @@ const KeyPerformIndicator = () => {
     } else {
       setColor("text-red-500");
     }
+    calculateForeCast(total);
   }
+
+  function daysLeftInMonth(date = new Date()) {
+    const year = date.getFullYear();
+    const month = date.getMonth(); // 0-indexed
+    const totalDaysInMonth = new Date(year, month + 1, 0).getDate();
+    const currentDay = date.getDate();
+
+    return totalDaysInMonth - currentDay;
+  }
+
+  function daysPassedInMonth(date = new Date()) {
+    return date.getDate() - 1;
+  }
+
+  const calculateForeCast = (cost) => {
+    let remDays = daysLeftInMonth();
+    let passDays = daysPassedInMonth();
+
+    let result = cost + (cost / passDays) * remDays;
+    setForeCast(result);
+    console.log("Forecasted Called");
+  };
 
   useEffect(() => {
     calculateTotalCost(data);
