@@ -11,7 +11,7 @@ export const DataProvider = ({ children }) => {
         async function fetchData() {
             setLoading(true);
             try {
-                const response = await axios.post('http://192.168.1.19:8989/api/azure-cost-custom/b8e73211-ba0b-4545-b969-b079e74c7265', {
+                const response = await axios.post('http://192.168.1.55:8989/api/azure-cost-custom/b8e73211-ba0b-4545-b969-b079e74c7265', {
                     "type": "ActualCost",
                     "timeframe": "MonthToDate",
                     "dataset": {
