@@ -5,25 +5,26 @@ const KeyPerformIndicator = () => {
   const [totalCostSpent, setTotalCostSpent] = useState(0);
   const [color, setColor] = useState("text-green-500");
   const [totalCost, setTotalCost] = useState(0);
-  const { data } = useContext(dataContext);
+  const { data, currencySymbol, currentCurrency, currencyValue } =
+    useContext(dataContext);
   const kpis = [
     {
       title: "Month to Date Spend",
-      value: `₹ ${totalCost.toFixed(2)}`,
-      subtext: "₹-74,866 vs prev",
+      value: `${currencySymbol} ${totalCost.toFixed(2)}`,
+      subtext: `${currencySymbol} -74,866 vs prev`,
       valueColor: "text-green-500",
       subtextColor: "text-green-400",
     },
     {
       title: "Budget Utilization",
       value: `${totalCostSpent}%`,
-      subtext: "of INR 1,000",
+      subtext: `of ${currentCurrency} ${(currencyValue * 1000).toFixed(2)}`,
       valueColor: `${color}`,
       subtextColor: "text-gray-500",
     },
     {
       title: "Savings Opportunities",
-      value: "₹ 707",
+      value: `${currencySymbol} 707`,
       subtext: "4 opportunities",
       valueColor: "text-green-500",
       subtextColor: "text-green-400",
@@ -37,7 +38,7 @@ const KeyPerformIndicator = () => {
     },
     {
       title: "Forecasted Month-End",
-      value: "₹ 223,985",
+      value: `${currencySymbol} 223,985`,
       subtext: "448% of budget",
       valueColor: "text-red-600",
       subtextColor: "text-red-400",
@@ -50,7 +51,7 @@ const KeyPerformIndicator = () => {
       total += item.TotalPreTaxCost;
     });
     setTotalCost(total);
-    let totalcost = ((total / 1000) * 100).toFixed(2);
+    let totalcost = ((total / (1000 * currencyValue)) * 100).toFixed(2);
     setTotalCostSpent(totalcost);
     if (totalcost < 80) {
       setColor("text-green-500");
@@ -63,7 +64,7 @@ const KeyPerformIndicator = () => {
 
   useEffect(() => {
     calculateTotalCost(data);
-  }, []);
+  }, [data]);
 
   return (
     <div className=" text-white p-8 rounded-xl">

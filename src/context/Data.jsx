@@ -6,8 +6,10 @@ export const dataContext = createContext();
 export const DataProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [currentCurrency, setCurrentCurrency] = useState("SEK");
+  const [currentCurrency, setCurrentCurrency] = useState("INR");
   const [currencyValue, setCurrencyValue] = useState(1);
+  const [currencySymbol, setCurrencySymbol] = useState("₹");
+  const [globalData, setGlobalData] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -29,17 +31,12 @@ export const DataProvider = ({ children }) => {
             },
           }
         ); // Replace with your API endpoint
-        if (currentCurrency !== "INR") {
-          const currencyResponse = await axios.get(
-            `https://api.frankfurter.app/latest?amount=1&from=INR&to=${currentCurrency}`
-          );
-          console.log("Currency conversion response:", currencyResponse.data);
-        }
 
         console.log("Data fetched successfully:", response.data);
         if (response) {
           setLoading(false);
           const agegregatedData = aggregatePreTaxCostByService(response?.data);
+          setGlobalData(agegregatedData);
           setData(agegregatedData);
         }
       } catch (error) {
@@ -48,6 +45,39 @@ export const DataProvider = ({ children }) => {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    async function fetchCurrencyValue() {
+      if (currentCurrency !== "INR") {
+        const currencyResponse = await axios.get(
+          `https://api.frankfurter.app/latest?amount=1&from=INR&to=${currentCurrency}`
+        );
+        if (currencyResponse.status === 200) {
+          setCurrencyValue(currencyResponse.data.rates[currentCurrency]);
+          console.log(typeof currencyValue);
+          let newData = [];
+          console.log(currencyResponse.data.rates[currentCurrency]);
+          globalData.map((item) => {
+            let newItem = {
+              ServiceName: item?.ServiceName,
+              TotalPreTaxCost:
+                item?.TotalPreTaxCost *
+                currencyResponse.data.rates[currentCurrency],
+            };
+            newData.push(newItem);
+          });
+          console.log(newData);
+          setData(newData);
+          setCurrencySymbol("kr");
+        }
+      } else {
+        setCurrencySymbol("₹");
+        setCurrencyValue(1);
+        setData(globalData);
+      }
+    }
+    fetchCurrencyValue();
+  }, [currentCurrency]);
 
   function aggregatePreTaxCostByService(data) {
     const serviceCosts = {};
@@ -73,7 +103,17 @@ export const DataProvider = ({ children }) => {
   }
 
   return (
-    <dataContext.Provider value={{ data, loading }}>
+    <dataContext.Provider
+      value={{
+        data,
+        loading,
+        setCurrentCurrency,
+        currentCurrency,
+        currencySymbol,
+        setCurrencySymbol,
+        currencyValue,
+      }}
+    >
       {children}
     </dataContext.Provider>
   );
