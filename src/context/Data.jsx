@@ -10,6 +10,12 @@ export const DataProvider = ({ children }) => {
     const [currencyValue, setCurrencyValue] = useState(1);
     const [currencySymbol, setCurrencySymbol] = useState('₹');
     const [globalData, setGlobalData] = useState([]);
+    const currencyObject = {
+        INR: "₹",
+        SEK: "kr",
+        USD: "$",
+        EUR: "€"
+      };
 
     useEffect(() => {
         async function fetchData() {
@@ -59,13 +65,14 @@ export const DataProvider = ({ children }) => {
                     });
                     console.log(newData);
                     setData(newData);
-                    setCurrencySymbol('kr');
+                    setCurrencySymbol(currencyObject[currentCurrency]);
                 }
             } else {
                 setCurrencySymbol('₹');
                 setCurrencyValue(1)
                 setData(globalData);
             }
+            console.log(currencyObject)
         }
         fetchCurrencyValue()
     }, [currentCurrency])

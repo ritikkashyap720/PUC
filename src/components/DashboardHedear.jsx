@@ -14,7 +14,6 @@ const DashboardHeader = () => {
             alt="Logo"
             className=" h-[100px] object-cover"
           />
-
         </div>
 
         {/* Heading */}
